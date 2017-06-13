@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     tools:context="studio.themad.droidcamera.CameraActivity">
 
     <FrameLayout
@@ -10,11 +11,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
+    <ImageButton
+        android:id="@+id/close"
+        android:background="#0000"
+        android:src="@drawable/ic_close"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" />
+
+    <ImageButton
         android:id="@+id/capture"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/capture_button_background"
+        android:src="@drawable/ic_camera"
         android:text="Capture" />
+
+    <ImageButton
+        android:id="@+id/gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/capture_button_background"
+        android:padding="8dp"
+        android:src="@drawable/ic_gallery" />
 
 </RelativeLayout>

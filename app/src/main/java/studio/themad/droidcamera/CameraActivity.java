@@ -2,8 +2,9 @@ package studio.themad.droidcamera;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,10 +12,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
 import android.app.Activity;
+import android.widget.ImageButton;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,11 +29,11 @@ import java.util.Date;
 import static android.content.ContentValues.TAG;
 
 
-public class CameraActivity extends Activity {
+public class CameraActivity extends Activity implements View.OnClickListener {
 
     private Camera mCamera;
     private CamPreview mPreview;
-    Button capture;
+    ImageButton capture, gallery, close;
     Activity context;
     public static final int MEDIA_TYPE_IMAGE = 1;
 
@@ -40,16 +43,56 @@ public class CameraActivity extends Activity {
         setContentView(R.layout.activity_camera);
         context = this;
 
+        //hide notification and navigation bar
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
         //Request permission and start Preview
         checkPermission();
 
-        capture = (Button) findViewById(R.id.capture);
-        capture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //declare views
+        capture = (ImageButton) findViewById(R.id.capture);
+        gallery = (ImageButton) findViewById(R.id.gallery);
+        close = (ImageButton) findViewById(R.id.close);
+
+        try {
+            capture.setOnClickListener(this);
+            gallery.setOnClickListener(this);
+            close.setOnClickListener(this);
+        } catch (Exception e) {
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.capture:
                 mCamera.takePicture(null, null, mPicture);
-            }
-        });
+                break;
+            case R.id.gallery:
+                break;
+            case R.id.close:
+                finish();
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //hide notification and navigation bar
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
     //checking permission starts here
