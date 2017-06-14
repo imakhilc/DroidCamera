@@ -46,7 +46,7 @@ public class GalleryActivity extends Activity {
         imageRecycler.setHasFixedSize(true);
 
         //recycler adapter
-        mRef = FirebaseDatabase.getInstance().getReference().child("Akhil").child("Photos");
+        mRef = FirebaseDatabase.getInstance().getReference().child("Photos");
 
         mAdapter = new FirebaseRecyclerAdapter<Photo, PhotoViewHolder>(Photo.class, R.layout.item_gallery, PhotoViewHolder.class, mRef) {
             @Override

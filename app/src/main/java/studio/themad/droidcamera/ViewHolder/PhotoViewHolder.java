@@ -56,8 +56,8 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     public void setId(String id) {
         this.id = id;
-        mStorageRef = FirebaseStorage.getInstance().getReference().child("Akhil").child("Photos");
-        mRef = FirebaseDatabase.getInstance().getReference().child("Akhil").child("Photos").child(id);
+        mStorageRef = FirebaseStorage.getInstance().getReference().child("Photos");
+        mRef = FirebaseDatabase.getInstance().getReference().child("Photos").child(id);
     }
 
     public void setImage(String location, final String cloud) {
@@ -164,7 +164,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onSuccess(Uri downloadUrl) {
                         String url = downloadUrl.toString();
-                        
+
                         //copy url to clipboard
                         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                         ClipData clip = ClipData.newPlainText("", url);
