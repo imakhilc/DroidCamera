@@ -106,7 +106,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
     }
