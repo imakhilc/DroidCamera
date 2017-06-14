@@ -3,21 +3,27 @@ package studio.themad.droidcamera.ViewHolder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.security.cert.Certificate;
 
 import studio.themad.droidcamera.ImagePreview;
 import studio.themad.droidcamera.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by AKHIL on 14-Jun-17.
@@ -40,9 +46,11 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         mRef = FirebaseDatabase.getInstance().getReference().child("Akhil").child("Photos").child(id);
     }
 
-    public void setImage(String location) {
+    public void setImage(String location, String cloud) {
+
         ImageView photo = (ImageView) mView.findViewById(R.id.photo);
         ImageButton delete = (ImageButton) mView.findViewById(R.id.delete);
+        ImageButton upload = (ImageButton) mView.findViewById(R.id.upload);
 
         final Uri imgUri = Uri.parse(location);
 
@@ -63,6 +71,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        //on individual delete button press
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +96,17 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("Delete this photo?").setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
+            }
+        });
+
+        //cloud upload service
+        if(cloud.equals("true"))
+            upload.setVisibility(View.GONE);
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
             }
         });
     }

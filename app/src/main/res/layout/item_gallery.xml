@@ -12,32 +12,25 @@
         android:layout_marginBottom="2dp"
         android:layout_marginRight="2dp"
         android:adjustViewBounds="true"
-        android:background="#000"
+        android:background="#aaa"
         android:scaleType="centerCrop" />
-
-    <!--<RelativeLayout
-        android:id="@+id/selection"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginRight="2dp"
-        android:background="#880084ff"
-        android:visibility="visible">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_done" />
-    </RelativeLayout>-->
 
     <ImageButton
         android:id="@+id/delete"
-        android:src="@drawable/ic_delete"
-        android:background="#0000"
-        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/photo"
         android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:background="#0000"
+        android:src="@drawable/ic_delete" />
+
+    <ImageButton
+        android:id="@+id/upload"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/photo"
+        android:layout_margin="5dp"
+        android:background="#0000"
+        android:src="@drawable/ic_cloud_upload" />
 </RelativeLayout>

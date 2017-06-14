@@ -196,7 +196,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
 
         //add database entry
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("Akhil").child("Photos");
-        Photo photo = new Photo(mediaFile.toURI().toString());
+        Photo photo = new Photo(mediaFile.toURI().toString(), "false");
         mRef.push().setValue(photo);
 
         return mediaFile;

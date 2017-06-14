@@ -11,9 +11,16 @@
         android:id="@+id/settings_panel"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorPrimary"
-        android:visibility="gone">
+        android:background="@color/colorPrimary">
+        <Spinner
+            android:layout_margin="5dp"
+            android:popupBackground="@color/colorPrimary"
+            android:prompt="@string/select"
+            android:entries="@array/country_arrays"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+        </Spinner>
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
