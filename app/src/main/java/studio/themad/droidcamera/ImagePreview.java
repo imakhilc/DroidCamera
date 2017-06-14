@@ -1,20 +1,11 @@
 package studio.themad.droidcamera;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
 
 public class ImagePreview extends Activity {
 
@@ -23,11 +14,9 @@ public class ImagePreview extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagepreview);
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-        getWindow().setLayout((int) (width * .9), (int) (height * .9));
+        //remove status bar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //url passed through intent
         String url = getIntent().getStringExtra("image_url");
@@ -37,6 +26,7 @@ public class ImagePreview extends Activity {
         Picasso.with(this)
                 .load(url)
                 .rotate(90)
+                .resize(1024, 576)
                 .into(preview);
     }
 }

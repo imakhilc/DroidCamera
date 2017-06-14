@@ -27,9 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".GalleryActivity" />
-        <activity
-            android:theme="@style/AppTheme.TransBack"
-            android:name=".ImagePreview"></activity>
+        <activity android:name=".ImagePreview"></activity>
     </application>
 
 </manifest>

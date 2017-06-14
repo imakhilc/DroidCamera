@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="2"
+    android:background="#fff"
+    android:orientation="vertical"
     tools:context="studio.themad.droidcamera.GalleryActivity">
+
+    <RelativeLayout
+        android:id="@+id/settings_panel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:visibility="gone">
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/imageRecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/settings_panel"
+        android:background="#fff"
         android:clipToPadding="false"
         android:paddingLeft="2dp"
-        android:paddingRight="1dp"
         android:paddingTop="2dp"
-        tools:listitem="@layout/item_gallery">
-    </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+        tools:listitem="@layout/item_gallery" />
+</RelativeLayout>
