@@ -178,7 +178,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         //create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d("MyCameraApp", "failed to create directory");
+                Log.d("DroidCamera", "failed to create directory");
                 return null;
             }
         }

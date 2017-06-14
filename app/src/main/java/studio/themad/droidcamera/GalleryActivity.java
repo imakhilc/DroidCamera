@@ -47,7 +47,7 @@ public class GalleryActivity extends Activity {
         mAdapter = new FirebaseRecyclerAdapter<Photo, PhotoViewHolder>(Photo.class, R.layout.item_gallery, PhotoViewHolder.class, mRef) {
             @Override
             public void populateViewHolder(PhotoViewHolder viewHolder, Photo photo, int position) {
-                viewHolder.setImage(photo.getLocation(), photo.getCloudStatus());
+                viewHolder.setImage(photo.getLocation(), photo.getCloud());
                 viewHolder.setId(mAdapter.getRef(position).getKey().toString());
                 viewHolder.getItemId();
             }

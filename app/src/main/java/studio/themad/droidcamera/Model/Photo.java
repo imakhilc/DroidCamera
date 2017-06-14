@@ -20,7 +20,7 @@ public class Photo {
         return location;
     }
 
-    public String getCloudStatus() {
+    public String getCloud() {
         return cloud;
     }
 }
