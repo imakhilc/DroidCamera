@@ -18,9 +18,9 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/imageRecycler"
+        android:layout_below="@id/settings_panel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/settings_panel"
         android:background="#fff"
         android:clipToPadding="false"
         android:paddingLeft="2dp"

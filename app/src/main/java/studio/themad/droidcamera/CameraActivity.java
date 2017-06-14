@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -194,7 +195,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         //Toast.makeText(context, mediaFile.toURI().toString(), Toast.LENGTH_SHORT).show();
 
         //add database entry
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("Photos");
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("Akhil").child("Photos");
         Photo photo = new Photo(mediaFile.toURI().toString());
         mRef.push().setValue(photo);
 

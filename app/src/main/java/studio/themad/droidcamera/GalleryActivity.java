@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -19,12 +21,13 @@ import studio.themad.droidcamera.ViewHolder.PhotoViewHolder;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 
-public class GalleryActivity extends Activity {
+public class GalleryActivity extends Activity implements View.OnClickListener {
 
     Activity context;
     DatabaseReference mRef;
     RecyclerView imageRecycler;
     FirebaseRecyclerAdapter mAdapter;
+    public static RelativeLayout settings_panel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +39,19 @@ public class GalleryActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        settings_panel = (RelativeLayout) findViewById(R.id.settings_panel);
         imageRecycler = (RecyclerView) findViewById(R.id.imageRecycler);
         imageRecycler.setNestedScrollingEnabled(false);
         imageRecycler.setHasFixedSize(true);
 
         //recycler adapter
-        mRef = FirebaseDatabase.getInstance().getReference().child("Photos");
+        mRef = FirebaseDatabase.getInstance().getReference().child("Akhil").child("Photos");
         mAdapter = new FirebaseRecyclerAdapter<Photo, PhotoViewHolder>(Photo.class, R.layout.item_gallery, PhotoViewHolder.class, mRef) {
             @Override
             public void populateViewHolder(PhotoViewHolder viewHolder, Photo photo, int position) {
                 viewHolder.setImage(photo.getLocation());
+                viewHolder.setId(mAdapter.getRef(position).getKey().toString());
+                viewHolder.getItemId();
             }
         };
         imageRecycler.setAdapter(mAdapter);
@@ -60,6 +66,7 @@ public class GalleryActivity extends Activity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 mAdapter.notifyDataSetChanged();
+                imageRecycler.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -74,8 +81,6 @@ public class GalleryActivity extends Activity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                mAdapter.notifyDataSetChanged();
-                imageRecycler.setVisibility(View.VISIBLE);
             }
         });
 
@@ -84,5 +89,11 @@ public class GalleryActivity extends Activity {
         //mManager.setReverseLayout(true);
         imageRecycler.setLayoutManager(mManager);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        int ok = imageRecycler.getChildAdapterPosition(imageRecycler.getFocusedChild());
+        Toast.makeText(context, " " + ok, Toast.LENGTH_SHORT).show();
     }
 }
