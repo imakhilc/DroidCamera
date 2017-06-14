@@ -27,7 +27,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/capture_button_background"
+        android:background="@drawable/button_background"
         android:src="@drawable/ic_camera"
         android:text="Capture" />
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
-        android:background="@drawable/capture_button_background"
+        android:background="@drawable/button_background"
         android:padding="8dp"
         android:src="@drawable/ic_gallery" />
 

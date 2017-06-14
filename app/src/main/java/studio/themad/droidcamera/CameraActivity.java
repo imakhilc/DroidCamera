@@ -1,6 +1,7 @@
 package studio.themad.droidcamera;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,10 @@ import android.widget.FrameLayout;
 
 import android.app.Activity;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,6 +30,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import studio.themad.droidcamera.Model.Photo;
 
 import static android.content.ContentValues.TAG;
 
@@ -68,13 +75,15 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    //button clicks
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.capture:
                 mCamera.takePicture(null, null, mPicture);
                 break;
             case R.id.gallery:
+                startActivity(new Intent(CameraActivity.this, GalleryActivity.class));
                 break;
             case R.id.close:
                 finish();
@@ -182,6 +191,11 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         } else {
             return null;
         }
+        Toast.makeText(context, mediaFile.toURI().toString(), Toast.LENGTH_SHORT).show();
+
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+        Photo photo = new Photo(mediaFile.toURI().toString());
+        mRef.push().setValue(photo);
 
         return mediaFile;
     }
