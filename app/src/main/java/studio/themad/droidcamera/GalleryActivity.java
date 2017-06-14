@@ -1,7 +1,6 @@
 package studio.themad.droidcamera;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,6 @@ public class GalleryActivity extends Activity {
     Activity context;
     DatabaseReference mRef;
     RecyclerView imageRecycler;
-    Boolean alter = true;
     FirebaseRecyclerAdapter mAdapter;
 
     @Override
@@ -32,13 +30,11 @@ public class GalleryActivity extends Activity {
         imageRecycler.setNestedScrollingEnabled(false);
         imageRecycler.setHasFixedSize(true);
 
-        mRef = FirebaseDatabase.getInstance().getReference();
-
+        mRef = FirebaseDatabase.getInstance().getReference().child("Photos");
         mAdapter = new FirebaseRecyclerAdapter<Photo, PhotoViewHolder>(Photo.class, R.layout.item_gallery, PhotoViewHolder.class, mRef) {
             @Override
             public void populateViewHolder(PhotoViewHolder viewHolder, Photo photo, int position) {
-                viewHolder.setImage(photo.getLocation(), alter);
-                alter = !alter;
+                viewHolder.setImage(photo.getLocation());
             }
         };
         imageRecycler.setAdapter(mAdapter);

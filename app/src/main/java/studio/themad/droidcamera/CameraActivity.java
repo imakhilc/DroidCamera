@@ -191,9 +191,10 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         } else {
             return null;
         }
-        Toast.makeText(context, mediaFile.toURI().toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, mediaFile.toURI().toString(), Toast.LENGTH_SHORT).show();
 
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+        //add database entry
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("Photos");
         Photo photo = new Photo(mediaFile.toURI().toString());
         mRef.push().setValue(photo);
 
