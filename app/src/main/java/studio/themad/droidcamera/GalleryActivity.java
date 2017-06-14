@@ -9,7 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -44,6 +47,7 @@ public class GalleryActivity extends Activity {
 
         //recycler adapter
         mRef = FirebaseDatabase.getInstance().getReference().child("Akhil").child("Photos");
+
         mAdapter = new FirebaseRecyclerAdapter<Photo, PhotoViewHolder>(Photo.class, R.layout.item_gallery, PhotoViewHolder.class, mRef) {
             @Override
             public void populateViewHolder(PhotoViewHolder viewHolder, Photo photo, int position) {
@@ -86,6 +90,5 @@ public class GalleryActivity extends Activity {
         mManager = new GridLayoutManager(this, 3);
         //mManager.setReverseLayout(true);
         imageRecycler.setLayoutManager(mManager);
-
     }
 }

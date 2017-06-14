@@ -1,5 +1,7 @@
 package studio.themad.droidcamera.ViewHolder;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -58,11 +60,12 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         mRef = FirebaseDatabase.getInstance().getReference().child("Akhil").child("Photos").child(id);
     }
 
-    public void setImage(String location, String cloud) {
+    public void setImage(String location, final String cloud) {
 
         ImageView photo = (ImageView) mView.findViewById(R.id.photo);
         final ImageButton delete = (ImageButton) mView.findViewById(R.id.delete);
         final ImageButton upload = (ImageButton) mView.findViewById(R.id.upload);
+        final ImageButton link = (ImageButton) mView.findViewById(R.id.link);
 
         final Uri imgUri = Uri.parse(location);
 
@@ -83,7 +86,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        //on individual delete button press
+        //photo deletion
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +100,8 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
                                 File file = new File(imgUri.getPath());
                                 boolean deleted = file.delete();
                                 mRef.removeValue();
+                                if (cloud.equals("true"))
+                                    mStorageRef.child(id + ".jpg").delete();
                                 break;
 
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -114,8 +119,10 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         });
 
         //cloud upload service
-        if (cloud.equals("true"))
+        if (cloud.equals("true")) {
             upload.setVisibility(View.GONE);
+            link.setVisibility(View.VISIBLE);
+        }
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +136,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
                 Bitmap bitmap = Bitmap.createScaledBitmap(bitmap1, 720, 405, true);
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
                 byte[] data = baos.toByteArray();
 
                 UploadTask uploadTask = imageRef.putBytes(data);
@@ -142,26 +149,31 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         upload.setVisibility(View.GONE);
-                        mRef.child(id).child("cloud").setValue("true");
+                        link.setVisibility(View.VISIBLE);
+                        mRef.child("cloud").setValue("true");
+                    }
+                });
+            }
+        });
+
+        //get image url
+        link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mStorageRef.child(id + ".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>(){
+                    @Override
+                    public void onSuccess(Uri downloadUrl) {
+                        String url = downloadUrl.toString();
+                        
+                        //copy url to clipboard
+                        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("", url);
+                        clipboard.setPrimaryClip(clip);
+
+                        Toast.makeText(context, "URL Copied", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-                /*imageRef.putFile(imgUri)
-                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // Get a URL to the uploaded content
-                                Toast.makeText(context, "done", Toast.LENGTH_SHORT).show();
-                                upload.setVisibility(View.GONE);
-                                mRef.child(id).child("cloud").setValue("true");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                Toast.makeText(context, exception.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });*/
             }
         });
     }

@@ -11,12 +11,14 @@
         android:id="@+id/settings_panel"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:visibility="gone"
         android:background="@color/colorPrimary">
         <Spinner
+            android:id="@+id/select"
             android:layout_margin="5dp"
             android:popupBackground="@color/colorPrimary"
             android:prompt="@string/select"
-            android:entries="@array/country_arrays"
+            android:entries="@array/selection"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

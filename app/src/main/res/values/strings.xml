@@ -2,9 +2,8 @@
     <string name="app_name">Droid Camera</string>
     <string name="select">Select</string>
 
-    <string-array name="country_arrays">
+    <string-array name="selection">
         <item>All Photos</item>
-        <item>SD Card</item>
         <item>On Cloud</item>
     </string-array>
 
